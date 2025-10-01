@@ -34,29 +34,77 @@ const loadTable = () => {
   })
 }
 
-// $(document).on("click", ".btn-edit", function () {
-//   alert("kvfjb ")
+$(document).on("click", ".btn-delete", function () {
+  const index = $(this).data("index")
+
+  const res = confirm(`Are you sure you want to delete ?`)
+  if (res) {
+    customer_array.splice(index, 1)
+    loadTable()
+  }
+})
+
+$(document).on("click", ".btn-edit", function () {
+  const index = $(this).data("index")
+
+  const customer = customer_array[index]
+
+  $("#customer-modal-title").text("Edit Customer")
+  $("#customer-id").val(customer.id)
+  $("#customer-name").val(customer.name)
+  $("#customer-address").val(customer.address)
+  $("#customer-salary").val(customer.salary)
+  $("#edit-index").val(index)
+  $("#btn-customer-save").text("Update")
+
+  // const modal = new bootstrap.Modal(
+  //   document.getElementById("customer-form-modal")
+  // )
+  // modal.show()
+  const modalEl = document.getElementById("customer-form-modal")
+  const modal = bootstrap.Modal.getOrCreateInstance(modalEl)
+  modal.show()
+})
+
+// $(document).ready(() => {
+//   // delete -> .btn-delete
+
+//   $(".btn-edit").on("click", function (e) {
+//     const index = $(this).data("index")
+
+//     const customer = customer_array[index]
+
+//     $("#customer-modal-title").text("Edit Customer")
+//     $("#customer-id").val(customer.id)
+//     $("#customer-name").val(customer.name)
+//     $("#customer-address").val(customer.address)
+//     $("#customer-salary").val(customer.salary)
+//     $("#edit-index").val(index)
+//     $("#btn-customer-save").text("Update")
+
+//     // const modal = new bootstrap.Modal(
+//     //   document.getElementById("customer-form-modal")
+//     // )
+//     // modal.show()
+//     const modalEl = document.getElementById("customer-form-modal")
+//     const modal = bootstrap.Modal.getOrCreateInstance(modalEl)
+//     modal.show()
+//   })
 // })
 
-$(document).ready(() => {
-  $(".btn-edit").on("click", function (e) {
-    const index = $(this).data("index")
+$("#btn-customer-modal-open").click(() => {
+  $("#customer-modal-title").text("Add Customer")
+  $("#edit-index").val("")
+  $("#btn-customer-save").text("Save")
 
-    const customer = customer_array[index]
+  $("#customer-id").val("")
+  $("#customer-name").val("")
+  $("#customer-address").val("")
+  $("#customer-salary").val("")
 
-    $("#customer-modal-title").text("Edit Customer")
-    $("#customer-id").val(customer.id)
-    $("#customer-name").val(customer.name)
-    $("#customer-address").val(customer.address)
-    $("#customer-salary").val(customer.salary)
-    $("#edit-index").val(index)
-    $("#btn-customer-save").text("Update")
-
-    const modal = new bootstrap.Modal(
-      document.getElementById("customer-form-modal")
-    )
-    modal.show()
-  })
+  const modalEl = document.getElementById("customer-form-modal")
+  const modal = bootstrap.Modal.getOrCreateInstance(modalEl)
+  modal.show()
 })
 
 $("#btn-customer-save").on("click", (e) => {
@@ -91,7 +139,7 @@ $("#btn-customer-save").on("click", (e) => {
 
   loadTable()
   // cleanForm()
-  
+
   const modalEl = document.getElementById("customer-form-modal")
   const modal = bootstrap.Modal.getInstance(modalEl)
   modal.hide()
